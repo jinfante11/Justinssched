@@ -7,7 +7,7 @@ string EnterFile;
 
 //User enters their choice in the menu
 int choice;
-
+ 
 int main() {
     cout << "Welcome to cloud\n";
     cout << "Please enter the program file\n";
