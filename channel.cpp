@@ -3,10 +3,6 @@
 #include <iostream>
 #include <sstream>
 
-// Constructor implementation for Channel
-Channel::Channel(std::string n, std::string f, std::string c) : name(n), frequency(f), category(c) {}
-
-// Load channels from a CSV file
 void ChannelManager::loadChannels(const std::string& filename) {
     std::ifstream file(filename);
     std::string line;
@@ -14,21 +10,26 @@ void ChannelManager::loadChannels(const std::string& filename) {
         std::cerr << "Failed to open the file." << std::endl;
         return;
     }
+
+    // Skip the header line
+    std::getline(file, line);
+
     while (getline(file, line)) {
         std::stringstream ss(line);
-        std::string name, frequency, category;
-        getline(ss, name, ',');
-        getline(ss, frequency, ',');
-        getline(ss, category, ',');
-        channels.emplace_back(name, frequency, category);
+        std::string cell;
+        // Assuming channel names are in the 5th column (column E)
+        for (int i = 0; i < 4; ++i) { // Skip first four columns
+            std::getline(ss, cell, ',');
+        }
+        std::getline(ss, cell, ','); // Read the channel name
+        channels.insert(cell); // Inserting into set will ensure uniqueness
     }
     file.close();
 }
 
-// Display all channels
 void ChannelManager::displayChannels() const {
-    std::cout << "List of Channels:\n";
+    std::cout << "Unique Channels:\n";
     for (const auto& channel : channels) {
-        std::cout << "Name: " << channel.name << ", Frequency: " << channel.frequency << ", Category: " << channel.category << std::endl;
+        std::cout << "Channel: " << channel << std::endl;
     }
 }

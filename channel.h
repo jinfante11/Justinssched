@@ -2,22 +2,11 @@
 #define CHANNEL_H
 
 #include <string>
-#include <vector>
+#include <set>
 
-// Define the Channel class
-class Channel {
-public:
-    std::string name;
-    std::string frequency;
-    std::string category;
-
-    Channel(std::string n, std::string f, std::string c);
-};
-
-// Define the ChannelManager class
 class ChannelManager {
 private:
-    std::vector<Channel> channels;
+    std::set<std::string> channels; // Using set to store unique channels
 
 public:
     void loadChannels(const std::string& filename);
